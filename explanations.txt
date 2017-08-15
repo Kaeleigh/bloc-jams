@@ -1,5 +1,0 @@
-`Relative positioning` are elements positioned a given amount from their normal position using offset properties that don’t affect the other elements. Also these elements that use relative positioning stay in the normal flow of the document.
-
-	`Absolute positioning` are elements taken out of the normal flow of the document and they are positioned relative to its nearest positioned predecessor. If there is no predecessor the element will adapt to the container’s position.
-
-`Box-sizing: border-box` used to keep the width and height the same when padding and border is added to the element. Whereas using the`box-sizing` default, the width and height of an element is changed as padding and border is added to that element. 
