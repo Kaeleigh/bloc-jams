@@ -102,11 +102,10 @@ html {
 .clearfix::before,
 
 .clearfix::after {
-    content: " ";
-    display: table;
-
-}
-
-.clearfix::after {
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
     clear: both;
+
 }
