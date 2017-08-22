@@ -74,6 +74,11 @@ var findParentByClassName = function(element, targetClass) {
       } // closes loop
       return currentParent;
     } // closes if statement
+    if (element.parentElement !== targetClass) {
+      console.log('No Parent Found');
+    } else if (element.parentElement.className !== targetClass) {
+      console.log('No parent found with that class name');
+    }// closes else if statement
 }; //closes findParentByClassName function
 
 var getSongItem = function(element) {
@@ -149,7 +154,7 @@ window.onload = function() {
             songItem.innerHTML = songItemNumber;
         } // closes if statement
       }); // closes addEventListener
-      
+
       songRows[i].addEventListener('click', function(event) {
         clickHandler(event.target); // Event handler call
       });
