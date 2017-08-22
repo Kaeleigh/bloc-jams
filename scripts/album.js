@@ -29,6 +29,21 @@ var albumMarconi = {
     { title: 'Wrong phone number', duration: '2:15' }
   ]
 };
+// My Album
+var albumJonSnow = {
+  title: 'Long Night',
+  artist: 'Night King',
+  label: 'George Martin',
+  year: '2017',
+  albumArtUrl: 'assets/images/album_covers/22.jpg',
+  songs: [
+    { title: 'Third Eye Raven', duration: '6:05' },
+    { title: 'Greyworm Battle', duration: '2:30' },
+    { title: 'Sansa Ballad', duration: '4:15' },
+    { title: 'Arya goes shopping', duration: '3:12' },
+    { title: 'Jorah Friendzone', duration: '2:12' }
+  ]
+};
 
 var createSongRow = function(songNumber, songName, songLength) {
   var template =
@@ -42,14 +57,15 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
 };
 
+//#1
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 
 var setCurrentAlbum = function(album) {
-  //#1
-  var albumTitle = document.getElementsByClassName('album-view-title')[0];
-  var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-  var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-  var albumImage = document.getElementsByClassName('album-cover-art')[0];
-  var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
   //#2
   albumTitle.firstChild.nodeValue = album.title;
@@ -68,4 +84,14 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
+
+    var albums = [albumPicasso, albumMarconi, albumJonSnow];
+    var index = 1;
+    albumImage.addEventListener("click", function(event) {
+      setCurrentAlbum(albums[index]);
+      index++;
+      if (index == albums.length) {
+        index = 0;
+      }
+    });
 };
