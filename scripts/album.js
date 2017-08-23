@@ -82,7 +82,7 @@ var getSongItem = function(element) {
     case 'ion-play':
     case 'ion-pause':
       return findParentByClassName(element, 'song-item-number');
-    case 'album-view-song':
+    case 'album-view-song-item':
       return element.querySelector('.song-item-number');
     case 'song-item-title':
     case 'song-item-duration':
@@ -106,6 +106,7 @@ var clickHandler = function(targetElement) {
       currentlyPlayingSong = null;
     } else if (currentlyPlayingSong !== songItem.getAttribute('data-song-number')) {
       var currentlyPlayingSongElement = document.querySelector(' [data-song-number="' + currentlyPlayingSong + '"]');
+      currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
       songItem.innerHTML = pauseButtonTemplate;
       currentlyPlayingSong = songItem.getAttribute('data-song-number');
     } // closes else if
@@ -130,7 +131,6 @@ window.onload = function() {
       //Only target individual song rows during event delegation
       if (event.target.parentElement.className === 'album-view-song-item') {
 
-          event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
 
           var songItem = getSongItem(event.target);
 
@@ -139,7 +139,7 @@ window.onload = function() {
           }// closes 2nd if statement
       } // closes 1st if statement
     });
-    // loop through list of songs 
+    // loop through list of songs
     for (var i = 0; i < songRows.length; i++) {
       songRows[i].addEventListener('mouseleave', function(event) {
 
