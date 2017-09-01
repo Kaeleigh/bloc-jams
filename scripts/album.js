@@ -134,8 +134,14 @@ var setCurrentAlbum = function(album) {
   }
 }; // closes setCurrentAlbum function
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+   $('.current-time').text(currentTime);
+
+}; // closes currentTime function
 
 var updateSeekBarWhileSongPlays = function() {
+
+
     if (currentSoundFile) {
       // #10
       currentSoundFile.bind('timeupdate', function(event) {   // timeupdate tracks time elapse while song playback
@@ -144,6 +150,7 @@ var updateSeekBarWhileSongPlays = function() {
           var $seekBar = $('.seek-control .seek-bar');
 
           updateSeekPercentage($seekBar, seekBarFillRatio);
+          setCurrentTimeInPlayerBar(this.getTime());
       }); // closes bind
     } // closes if statement
 }; //closes updateSeekBarWhileSongPlays function
@@ -284,12 +291,13 @@ var previousSong = function() {
 }; // closes previousSong function
 
 var togglePlayFromPlayerBar = function() {
+    var $currentSong = getSongNumberCell(currentlyPlayingSongNumber);
     if (currentSoundFile.isPaused()) {
-        $(this).html(pauseButtonTemplate);  // changes song number from play to pause
+        $currentSong.html(pauseButtonTemplate);
         $barButton.html(playerBarPauseButton);  // changes play in bar to pause
         currentSoundFile.play();    // plays the song
     } else if (currentSoundFile) {
-        $(this).html(playButtonTemplate);   // changes song number from pause to play
+        $currentSong.html(playButtonTemplate);
         $barButton.html(playerBarPlayButton);   // changes pause in bar to play
         currentSoundFile.pause();               // pauses the song
     } // closes else if conditional
