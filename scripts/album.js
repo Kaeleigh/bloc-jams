@@ -11,7 +11,7 @@ var setSong = function(songNumber) {
       formats: [ 'mp3' ],
       preload: true   // states we want mp3 loaded as soon as page loads
     });
-
+    setVolume(currentVolume);
 }; // closes setSong function
 // change current song's playback location
 var seek = function(time) {
@@ -34,7 +34,7 @@ var createSongRow = function(songNumber, songName, songLength) {
       '<tr class="album-view-song-item">'
      +' <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
      +' <td class="song-item-title">' + songName + '</td>'
-     +' <td class="song-item-duration">' + songLength + '</td>'
+     +' <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
      +'</tr>'
      ;
 
@@ -135,9 +135,23 @@ var setCurrentAlbum = function(album) {
 }; // closes setCurrentAlbum function
 
 var setCurrentTimeInPlayerBar = function(currentTime) {
-   $('.current-time').text(currentTime);
+    $('.seek-control .current-time').text(currentTime);
 
 }; // closes currentTime function
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    $('.seek-control .total-time').text(totalTime);
+}; // closes total time player
+
+var filterTimeCode = function(timeInSeconds) {
+    var timing = parseFloat(timeInSeconds);   // turns timing into floating number
+    var minute = Math.floor(timing / 60);
+    var second = Math.floor(timing % 60);   // remainder of time / 60 becomes seconds
+    if (second < 10) {            // creates the y of seconds so x.xy
+      second = '0' + second;
+    }
+    return minute + ':' + second;   // creates format x:xx
+}; // closes time code function
 
 var updateSeekBarWhileSongPlays = function() {
 
@@ -150,7 +164,7 @@ var updateSeekBarWhileSongPlays = function() {
           var $seekBar = $('.seek-control .seek-bar');
 
           updateSeekPercentage($seekBar, seekBarFillRatio);
-          setCurrentTimeInPlayerBar(this.getTime());
+          setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));    // .getTime grabs the current time of song that is playing
       }); // closes bind
     } // closes if statement
 }; //closes updateSeekBarWhileSongPlays function
@@ -224,6 +238,7 @@ var updatePlayerBarSong = function() {
   $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
 
   $('.main-controls .play-pause').html(playerBarPauseButton);
+  setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.duration));
 }; // closes barsong function
 
 // helps track index of current song
